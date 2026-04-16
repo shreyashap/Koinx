@@ -2,6 +2,7 @@ import { AppShell } from "./components/layout/AppShell";
 import { TaxHeader } from "./components/layout/TaxHeader";
 import { ImportantNotes } from "./components/layout/ImportantNotes";
 import { GainsCard } from "./components/harvesting/GainsCard";
+import { HoldingsTable } from "./components/harvesting/HoldingsTable";
 import { useHarvesting } from "./context/HarvestingContext";
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
     return (
       <AppShell>
         <div className="flex items-center justify-center h-64">
-          <p className="text-muted-foreground animate-pulse font-medium">Loading holdings...</p>
+          <p className="text-muted-foreground animate-pulse font-medium text-white">Loading holdings...</p>
         </div>
       </AppShell>
     );
@@ -21,7 +22,7 @@ function App() {
     return (
       <AppShell>
         <div className="flex items-center justify-center h-64 text-destructive">
-          <p className="font-medium">{error}</p>
+          <p className="font-medium text-white">{error}</p>
         </div>
       </AppShell>
     );
@@ -46,9 +47,8 @@ function App() {
         />
       </div>
 
-      <div className="bg-card rounded-xl border border-border p-6 min-h-[400px] flex items-center justify-center">
-        {/* Placeholder for Table */}
-        <p className="text-muted-foreground text-sm font-medium">Holdings Table Component (Coming in Task 6)</p>
+      <div className="mb-10">
+        <HoldingsTable />
       </div>
     </AppShell>
   );

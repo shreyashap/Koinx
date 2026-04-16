@@ -1,13 +1,13 @@
 /**
- * Formats a number as INR currency.
- * e.g., 125000 -> ₹1,25,000
+ * Formats a number as USD currency.
+ * e.g., 125000 -> $ 1,25,000
  */
 export const formatINR = (amount: number): string => {
-    return new Intl.NumberFormat("en-IN", {
+    return new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: "INR",
+        currency: "USD",
         maximumFractionDigits: 0,
-    }).format(amount);
+    }).format(amount).replace("$", "$ ");
 };
 
 /**

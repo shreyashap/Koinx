@@ -1,0 +1,12 @@
+/* 
+  KoinX Color Palette Reference
+  These colors are already configured in Tailwind via index.css 
+*/
+
+:root {
+    --koinx-blue: #2563eb;
+    --koinx-dark: #0f172a;
+    --koinx-background: #020617;
+    --koinx-success: #22c55e;
+    --koinx-destructive: #ef4444;
+}

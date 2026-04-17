@@ -71,7 +71,7 @@ export const GainsCard: React.FC<GainsCardProps> = ({
             </CardContent>
 
             {isBlue && savings !== undefined && savings > 0 && (
-                <CardFooter className="bg-white/10 py-5 px-6 border-t border-white/5 flex items-center gap-2">
+                <CardFooter className="bg-white/10 py-5 px-6 border-t border-white/5 flex items-center gap-2 animate-in slide-in-from-bottom-2 fade-in duration-300">
                     <span className="text-2xl pt-0.5">🎉</span>
                     <div className="text-[13px] font-medium flex items-baseline gap-1.5 border-none p-0 bg-transparent">
                         <span className="opacity-90">You are going to save upto</span>

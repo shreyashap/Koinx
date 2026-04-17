@@ -95,8 +95,9 @@ export const HarvestingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
             (postHarvesting.stcg.profits - postHarvesting.stcg.losses) +
             (postHarvesting.ltcg.profits - postHarvesting.ltcg.losses);
 
-        // Only show "You're going to save" if realised capital gains drop
-        return preRealisedNet > postRealisedNet ? preRealisedNet - postRealisedNet : 0;
+        // Savings = Difference in net realized gains * 30% tax rate
+        const reduction = preRealisedNet - postRealisedNet;
+        return reduction > 0 ? reduction * 0.3 : 0;
     }, [preHarvesting, postHarvesting]);
 
     return (

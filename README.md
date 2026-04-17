@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# KoinX Tax Loss Harvesting Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A professional-grade crypto tax optimization tool built for KoinX. This application helps investors minimize their tax liability by identifying unrealized losses and offsetting them against realized capital gains.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Interactive Capital Gains Dashboard**: Real-time visualization of Pre-Harvesting and After-Harvesting gains.
+- **Tax Savings Calculator**: Automatically calculates potential tax savings based on the 30% crypto tax rule.
+- **Smart Asset Selection**: Interactive holdings table with STCG/LTCG breakdown and "Amount to Sell" indicators.
+- **Indian Tax Compliance**: Uses INR (₹) currency and Indian tax terminology (Short-Term/Long-Term Capital Gains).
+- **Premium UI/UX**: 
+  - 🌗 Full Light/Dark mode support.
+  - 🎨 Pixel-perfect design synchronized with Figma.
+  - 📱 Fully responsive layout for desktop and mobile.
+  - ⚡ Smooth animations and micro-interactions using Framer Motion.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Components**: [Shadcn UI](https://ui.shadcn.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Context API**: For centralized tax calculation logic.
 
-## Expanding the ESLint configuration
+## 📦 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js (v18 or higher)
+- npm or pnpm
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/shreyashap/KoinX.git
+   cd coinx
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📐 Project Structure
+
+- `src/components`: UI components (layout, harvesting, ui).
+- `src/context`: `HarvestingContext` for central state and calculations.
+- `src/services`: Mock API services for fetching holdings and gains.
+- `src/constants`: Mock data and configuration.
+- `src/utils`: Currency formatters and helper functions.

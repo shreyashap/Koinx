@@ -6,20 +6,19 @@ export const Navbar: React.FC = () => {
 
     useEffect(() => {
         const bodyElem = document.querySelector('body');
-        if (!bodyElem.classList.contains('light') && !bodyElem.classList.contains('dark')) {
-            bodyElem.classList.add('dark');
-            setTheme('dark');
+        if (!bodyElem?.classList.contains('light') && !bodyElem?.classList.contains('dark')) {
+            bodyElem?.classList.add('dark');
         }
     }, [])
     const handleThemeToggle = () => {
         const bodyElem = document.querySelector('body');
         if (theme === 'dark') {
-            bodyElem.classList.remove('dark');
-            bodyElem.classList.add('light');
+            bodyElem?.classList.remove('dark');
+            bodyElem?.classList.add('light');
             setTheme('light')
         } else {
-            bodyElem.classList.remove('light');
-            bodyElem.classList.add('dark');
+            bodyElem?.classList.remove('light');
+            bodyElem?.classList.add('dark');
             setTheme("dark")
         }
 

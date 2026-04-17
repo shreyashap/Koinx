@@ -11,7 +11,13 @@ import { Checkbox } from "../ui/checkbox";
 import { useHarvesting } from "../../context/HarvestingContext";
 import { formatINR } from "../../utils/formatters";
 import { cn } from "../../lib/utils";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Info } from "lucide-react";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "../ui/tooltip";
 
 type SortField = "stcg" | "ltcg" | null;
 type SortOrder = "asc" | "desc";
@@ -52,16 +58,6 @@ export const HoldingsTable: React.FC = () => {
 
     const displayedHoldings = isExpanded ? sortedHoldings : sortedHoldings.slice(0, 4);
 
-    const getCoinColor = (coin: string) => {
-        switch (coin.toUpperCase()) {
-            case "BTC": return "bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.4)]";
-            case "ETH": return "bg-gray-400 shadow-[0_0_10px_rgba(156,163,175,0.4)]";
-            case "USDT": return "bg-teal-500 shadow-[0_0_10px_rgba(20,184,166,0.4)]";
-            case "MATIC": return "bg-purple-600 shadow-[0_0_10px_rgba(147,51,234,0.4)]";
-            default: return "bg-blue-600";
-        }
-    };
-
     return (
         <div className="rounded-xl border border-gray-100 dark:border-white/5 bg-white dark:bg-[#111827] overflow-hidden flex flex-col mt-8 shadow-sm dark:shadow-2xl">
             <div className="p-5 border-b border-gray-100 dark:border-white/5">
@@ -90,13 +86,23 @@ export const HoldingsTable: React.FC = () => {
 
                             <TableHead
                                 className="text-gray-800 dark:text-gray-500 font-semibold py-4 text-[11px] uppercase tracking-wider cursor-pointer hover:text-black dark:hover:text-white transition-colors"
-                                onClick={() => handleSort("stcg")}
                             >
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-1 group" onClick={() => handleSort("stcg")}>
                                     Short-term
-                                    {sortField === "stcg" && (
+                                    {sortField === "stcg" ? (
                                         sortOrder === "asc" ? <ChevronUp size={12} /> : <ChevronDown size={12} />
-                                    )}
+                                    ) : <div className="w-3" />}
+
+                                    <TooltipProvider delayDuration={200}>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
+                                                <Info size={12} className="opacity-40 group-hover:opacity-100 transition-opacity ml-1" />
+                                            </TooltipTrigger>
+                                            <TooltipContent className="max-w-xs p-3">
+                                                <p className="text-xs">Short Term Capital Gains: Gains on assets held for less than a certain period (e.g., 24-36 months for crypto in India).</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
                                 </div>
                             </TableHead>
 
@@ -104,11 +110,22 @@ export const HoldingsTable: React.FC = () => {
                                 className="text-gray-800 dark:text-gray-500 font-semibold py-4 text-[11px] uppercase tracking-wider cursor-pointer hover:text-black dark:hover:text-white transition-colors"
                                 onClick={() => handleSort("ltcg")}
                             >
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-1 group">
                                     Long-Term
-                                    {sortField === "ltcg" && (
+                                    {sortField === "ltcg" ? (
                                         sortOrder === "asc" ? <ChevronUp size={12} /> : <ChevronDown size={12} />
-                                    )}
+                                    ) : <div className="w-3" />}
+
+                                    <TooltipProvider delayDuration={200}>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
+                                                <Info size={12} className="opacity-40 group-hover:opacity-100 transition-opacity ml-1" />
+                                            </TooltipTrigger>
+                                            <TooltipContent className="max-w-xs p-3">
+                                                <p className="text-xs">Long Term Capital Gains: Gains on assets held for a longer period, usually benefiting from lower tax rates or indexation.</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
                                 </div>
                             </TableHead>
 
@@ -140,8 +157,15 @@ export const HoldingsTable: React.FC = () => {
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex items-center gap-3">
-                                            <div className={cn("w-7 h-7 rounded-full flex items-center justify-center font-bold text-[10px] text-white shrink-0", getCoinColor(h.coin))}>
-                                                {h.coin.substring(0, 1)}
+                                            <div className="w-7 h-7 rounded-full flex items-center justify-center overflow-hidden bg-gray-50 dark:bg-gray-800 shrink-0">
+                                                <img
+                                                    src={h.logo}
+                                                    alt={h.coinName}
+                                                    className="w-full h-full object-cover"
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${h.coin}&background=random`;
+                                                    }}
+                                                />
                                             </div>
                                             <div className="flex flex-col truncate">
                                                 <span className="font-bold text-[#111827] dark:text-white text-sm leading-tight truncate">{h.coinName}</span>
@@ -151,10 +175,10 @@ export const HoldingsTable: React.FC = () => {
                                     </TableCell>
                                     <TableCell>
                                         <div className="font-bold text-[#111827] dark:text-white text-sm whitespace-nowrap">{(h.totalHolding || 0).toLocaleString(undefined, { maximumFractionDigits: 6 })} {h.coin}</div>
-                                        <div className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">$ {marketRate.toLocaleString()}/{h.coin}</div>
+                                        <div className="text-[10px] text-gray-400 dark:text-gray-500 font-medium">{formatINR(marketRate)}/{h.coin}</div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className="font-bold text-[#111827] dark:text-white text-sm whitespace-nowrap">$ {totalValue.toLocaleString()}</div>
+                                        <div className="font-bold text-[#111827] dark:text-white text-sm whitespace-nowrap">{formatINR(totalValue)}</div>
                                     </TableCell>
                                     <TableCell>
                                         <div className={cn(

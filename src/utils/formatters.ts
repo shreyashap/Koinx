@@ -1,19 +1,19 @@
 /**
- * Formats a number as USD currency.
- * e.g., 125000 -> $ 1,25,000
+ * Formats a number as INR (₹)
+ * @param value The amount to format
  */
-export const formatINR = (amount: number): string => {
-    return new Intl.NumberFormat("en-US", {
+export const formatINR = (value: number): string => {
+    return new Intl.NumberFormat("en-IN", {
         style: "currency",
-        currency: "USD",
+        currency: "INR",
         maximumFractionDigits: 0,
-    }).format(amount).replace("$", "$ ");
+    }).format(value);
 };
 
 /**
- * Formats a number with +/- sign for gains/losses.
+ * Returns the sign for a gain/loss amount
+ * @param value The gain or loss amount
  */
-export const formatGain = (amount: number): string => {
-    const formatted = formatINR(Math.abs(amount));
-    return amount >= 0 ? `+${formatted}` : `-${formatted}`;
+export const getGainLossSign = (value: number): string => {
+    return value >= 0 ? "+" : "-";
 };
